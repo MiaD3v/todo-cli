@@ -16,6 +16,19 @@ function init_db(db)
 end
 ret.init_db = init_db
 
+function add_entry(db, arg)
+    local prep = db:prepare([[
+    INSERT INTO todos(desc, _when, priority) 
+    VALUES (?,?,?);]])
+    prep:bind_values(arg[3],arg[4],arg[5])
+    prep:step()
+    local success = prep:finalize()
+    if success ~= sq.OK then
+        error("Failed to add entry! " .. success)
+    end
+end
+ret.add_entry = add_entry
+
 function print_todos(db)
     local todos = _get_todos(db);
     for _, td in pairs(_get_todos(db)) do
