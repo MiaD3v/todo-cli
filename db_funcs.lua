@@ -73,10 +73,6 @@ function print_todos(db)
 end
 ret.print_todos = print_todos
 
-<<<<<<< HEAD
-
-function _get_sorted_todos(db)
-=======
 function _padstr(str, len, char)
 
     assert(string.len(char) == 1)
@@ -92,8 +88,7 @@ function _padstr(str, len, char)
     return str
 end
 
-function _get_todos(db)
->>>>>>> ec89480 (formatting... kind of (not really))
+function _get_sorted_todos(db)
     local out = {}
     for id, desc, when, priority in
         db:urows("SELECT id, desc, _when, priority FROM todos ORDER BY priority DESC;") do
