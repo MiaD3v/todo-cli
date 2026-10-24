@@ -30,8 +30,8 @@ end
 ret.add_entry = add_entry
 
 function print_todos(db)
-    local todos = _get_todos(db);
-    for _, td in pairs(_get_todos(db)) do
+    local todos = _get_sorted_todos(db);
+    for _, td in pairs(_get_sorted_todos(db)) do
         print("id: " .. td.id ..
               " description: \"" .. td.desc ..
               "\" when: \"" .. td.when ..
@@ -40,10 +40,11 @@ function print_todos(db)
 end
 ret.print_todos = print_todos
 
-function _get_todos(db)
+
+function _get_sorted_todos(db)
     local out = {}
     for id, desc, when, priority in
-        db:urows("SELECT id, desc, _when, priority FROM todos;") do
+        db:urows("SELECT id, desc, _when, priority FROM todos ORDER BY priority DESC;") do
         table.insert(out, {
             id = id,
             desc = desc,
