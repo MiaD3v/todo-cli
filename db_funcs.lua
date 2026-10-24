@@ -17,11 +17,12 @@ end
 ret.init_db = init_db
 
 function print_todos(db)
+    local todos = _get_todos(db);
     for _, td in pairs(_get_todos(db)) do
-        print(td.id)
-        print(td.desc)
-        print(td.when)
-        print(td.priority)
+        print("id: " .. td.id ..
+              " description: \"" .. td.desc ..
+              "\" when: \"" .. td.when ..
+              "\" priority: ", td.priority)
     end
 end
 ret.print_todos = print_todos
