@@ -39,6 +39,16 @@ elseif arg[1] == "show" then
     local db = sq.open(arg[2])
     db_funcs.print_todos(db)
 
+elseif arg[1] == "rm" then
+
+    if #arg ~= 3 then
+        print_help_page()
+        os.exit(1)
+    end
+
+    local db = sq.open(arg[2])
+    db_funcs.remove_todo(db, arg[3])
+
 else
     print_help_page()
     os.exit(1)

@@ -45,7 +45,8 @@ function _get_sorted_todos(db)
     local out = {}
     for id, desc, when, priority in
         db:urows("SELECT id, desc, _when, priority FROM todos ORDER BY priority DESC;") do
-        table.insert(out, {
+        table.insert(out,
+        {
             id = id,
             desc = desc,
             when = when,
@@ -54,5 +55,25 @@ function _get_sorted_todos(db)
     end
     return out
 end
+
+function remove_todo(db, id)
+    local prep = db:prepare "DELETE FROM todos WHERE id = ?;"
+    local success = true;
+    if not pcall(function()
+        prep:bind_values(id)
+        prep:step()
+    end) then
+        success = false
+    end
+    if prep:finalize() ~= sq.OK then
+        success = false
+    end
+
+    if not success then
+        error("Failed to delete todo from from the database!")
+    end
+
+end
+ret.remove_todo = remove_todo
 
 return ret
